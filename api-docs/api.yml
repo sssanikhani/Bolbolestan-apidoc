@@ -73,7 +73,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/TermCourses'
+                  $ref: '#/components/schemas/TermReport'
         '401':
           description: Not Authorized
   
@@ -236,7 +236,7 @@ paths:
 components:
   schemas:
 
-    TermCourses:
+    TermReport:
       type: object
       properties:
         term:
@@ -247,21 +247,25 @@ components:
           type: number
           format: float
           example: 19.05
-        courses:
+        units:
+          type: integer
+          format: int64
+          example: 17
+        grades:
           type: array
           items:
-            $ref: '#/components/schemas/TermCourse'
+            $ref: '#/components/schemas/TermGrade'
     
-    TermCourse:
+    TermGrade:
       type: object
       properties:
         term:
           type: integer
           format: int64
           example: 5
-        status:
-          type: string
-          example: 'Passed'
+        passed:
+          type: boolean
+          example: true
         grade:
           type: number
           format: float
