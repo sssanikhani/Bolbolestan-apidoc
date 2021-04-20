@@ -22,7 +22,7 @@ pages:
     - mkdir public
     - cp -rp node_modules/swagger-ui-dist/* public
     - cp -rp $DOCS_FOLDER/* public
-    - sed -i "/api.yml" public/index.html
+    - sed -i "api.yml" public/index.html
   artifacts:
     paths:
       - public
