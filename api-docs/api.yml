@@ -73,7 +73,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ReportCard'
+                  $ref: '#/components/schemas/TermCourses'
         '401':
           description: Not Authorized
   
@@ -235,12 +235,7 @@ paths:
 
 components:
   schemas:
-    
-    ReportCard:
-      type: array
-      items:
-        $ref: '#/components/schemas/TermCourses'
-    
+
     TermCourses:
       type: object
       properties:
@@ -332,6 +327,12 @@ components:
         teacher:
           type: string
           example: 'رامتین خسروی'
+        capacity:
+          type: integer
+          format: int64
+        registered:
+          type: integer
+          format: int64
         time:
           $ref: '#/components/schemas/ClassTime'
         course:
