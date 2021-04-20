@@ -321,7 +321,7 @@ components:
     Offering:
       type: object
       properties:
-        id:
+        code:
           type: string
           example: '8101000_01'
         teacher:
@@ -364,6 +364,9 @@ components:
         name:
           type: string
           example: 'برنامه نویسی پیشرفته'
+        type:
+          type: string
+          example: 'اصلی'
         units:
           type: integer
           format: int64
