@@ -1,0 +1,410 @@
+openapi: 3.0.0
+info:
+  description: |
+    This is bolbolestan server api documentation
+  version: "1.0.0"
+  title: Bolbolestan
+  contact:
+    email: sssanikhani@gmail.com
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/sssanikhani/Bolbolestan/1.0.0
+tags:
+  - name: student
+    description: Student api endpoints
+  - name: offerings
+    description: Offerings api endpoints
+
+paths:
+  
+  /student/login:
+    post:
+      tags:
+        - student
+      summary: Login student
+      operationId: studentLogin
+      requestBody:
+        $ref: '#/components/requestBodies/Login'
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Not Authorized
+  
+  /student/logout:
+    post:
+      tags:
+        - student
+      summary: Logout current student
+      operationId: studentLogout
+      responses:
+        '200':
+          description: OK
+
+  /student:
+    get:
+      tags:
+        - student
+      summary: Get student information
+      operationId: getStudent
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+        '401':
+          description: Not Authorized
+
+  /student/report-card:
+    get:
+      tags:
+        - student
+      summary: Get student report card
+      operationId: getStudentReportCard
+
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReportCard'
+        '401':
+          description: Not Authorized
+  
+  /student/plan:
+    get:
+      tags:
+        - student
+      summary: Get student plan
+      operationId: getStudentPlan
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Plan'
+        '401':
+          description: Not Authorized
+
+  /student/offerings:
+    get:
+      tags:
+        - student
+      summary: Get student all offerings
+      operationId: getStudentOfferings
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StudentOffering'
+        '401':
+          description: Not Authorized
+
+  '/student/offerings/{offering_id}':
+    post:
+      tags:
+        - student
+      summary: Add offering for student
+      operationId: addStudentOffering
+      parameters:
+        - name: offering_id
+          in: path
+          description: The offering id to add
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Not Allowed
+        '403':
+          description: Not Permitted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotPermitted'
+    
+    delete:
+      tags:
+        - student
+      summary: Remove chosen offering for student
+      operationId: removeStudentOffering
+      parameters:
+        - name: offering_id
+          in: path
+          description: The offering id to remove
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Not Allowed
+        '403':
+          description: Not Permitted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotPermitted'
+
+  /student/offerings/submit:
+    post:
+      tags:
+        - student
+      summary: Submit current chosen offerings
+      operationId: submitOfferings
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Not Authorized
+        '403':
+          description: Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotPermitted'
+  
+  /student/offerings/reset:
+    post:
+      tags:
+        - student
+      summary: Reset chosen offerings
+      operationId: resetOfferings
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Not Authorized
+
+  /offerings:
+    get:
+      tags:
+        - offerings
+      summary: Get all offerings
+      operationId: getAllOfferings
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Offering'
+        '401':
+          description: Not Authorized
+  
+  /offerings/search:
+    get:
+      tags:
+        - offerings
+      summary: Search offerings
+      operationId: searchOfferings
+      parameters:
+        - name: q
+          description: Search query
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Offering'
+        '401':
+          description: Not Authorized
+
+components:
+  schemas:
+    
+    ReportCard:
+      type: array
+      items:
+        $ref: '#/components/schemas/TermCourses'
+    
+    TermCourses:
+      type: object
+      properties:
+        term:
+          type: integer
+          format: int64
+          example: 5
+        gpa:
+          type: number
+          format: float
+          example: 19.05
+        courses:
+          type: array
+          items:
+            $ref: '#/components/schemas/TermCourse'
+    
+    TermCourse:
+      type: object
+      properties:
+        term:
+          type: integer
+          format: int64
+          example: 5
+        status:
+          type: string
+          example: 'Passed'
+        grade:
+          type: number
+          format: float
+          example: 18.00
+        course:
+          $ref: '#/components/schemas/Course'
+    
+    Student:
+      type: object
+      properties:
+        student_id:
+          type: string
+          example: '810197000'
+        fname:
+          type: string
+          example: 'تست'
+        lname:
+          type: string
+          example: 'تست پور'
+        bdate:
+          type: string
+          example: '25/03/1379'
+        gpa:
+          type: number
+          format: float
+          example: 18.00
+        passedUnits:
+          type: integer
+          format: int64
+          example: 94
+        faculty:
+          type: string
+          example: 'پردیس دانشکده های فنی'
+        major:
+          type: string
+          example: 'مهندسی کامپیوتر'
+        level:
+          type: string
+          example: 'کارشناسی'
+        status:
+          type: string
+          example: 'مشغول به تحصیل'
+        image:
+          type: string
+          format: link
+          example: 'http://localhost:8000/image'
+    
+    StudentOffering:
+      type: object
+      properties:
+        status:
+          type: string
+          example: 'registered'
+        offering:
+          $ref: '#/components/schemas/Offering'
+    
+    Offering:
+      type: object
+      properties:
+        id:
+          type: string
+          example: '8101000_01'
+        teacher:
+          type: string
+          example: 'رامتین خسروی'
+        time:
+          $ref: '#/components/schemas/ClassTime'
+        course:
+          $ref: '#/components/schemas/Course'
+    
+    ClassTime:
+      type: object
+      properties:
+        time:
+          type: string
+          example: '10:30-12:00'
+        oclock:
+          type: integer
+          example: 10
+        half:
+          type: boolean
+          example: true
+        length:
+          type: number
+          format: float
+          example: 1.5
+
+    Course:
+      type: object
+      properties:
+        code:
+          type: string
+          example: '8101000'
+        name:
+          type: string
+          example: 'برنامه نویسی پیشرفته'
+        units:
+          type: integer
+          format: int64
+          example: 3
+    
+    Plan:
+      type: array
+      items:
+        $ref: '#/components/schemas/DayPlan'
+    
+    DayPlan:
+      type: object
+      properties:
+        day:
+          type: string
+          example: 'saturday'
+        offerings:
+          type: array
+          items:
+            $ref: '#/components/schemas/Offering'
+    
+    NotPermitted:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int64
+          example: 403
+        message:
+          type: string
+          example: 'MaxUnits'
+
+  requestBodies:
+    Login:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              student_id:
+                type: string
+                example: '810197000'
+              password:
+                type: string
+                example: '1234'
