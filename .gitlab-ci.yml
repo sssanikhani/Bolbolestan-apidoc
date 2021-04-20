@@ -4,7 +4,7 @@ image: node:10-alpine
 # specify the location of the Open API Specification files within your project
 # and the filename of the specification that you would like to display by default
 variables:
-  DOCS_FOLDER: "api-docs"
+  DOCS_FOLDER: "/"
   SPEC_TO_DISPLAY: "api.yml"
 
 # These folders are cached between builds
