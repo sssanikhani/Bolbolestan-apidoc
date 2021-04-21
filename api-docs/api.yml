@@ -327,7 +327,7 @@ components:
       properties:
         code:
           type: string
-          example: '8101000_01'
+          example: '1'
         teacher:
           type: string
           example: 'رامتین خسروی'
@@ -338,26 +338,10 @@ components:
           type: integer
           format: int64
         time:
-          $ref: '#/components/schemas/ClassTime'
-        course:
-          $ref: '#/components/schemas/Course'
-    
-    ClassTime:
-      type: object
-      properties:
-        time:
           type: string
           example: '10:30-12:00'
-        oclock:
-          type: integer
-          example: 10
-        half:
-          type: boolean
-          example: true
-        length:
-          type: number
-          format: float
-          example: 1.5
+        course:
+          $ref: '#/components/schemas/Course'
 
     Course:
       type: object
