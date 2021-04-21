@@ -325,7 +325,7 @@ components:
     Offering:
       type: object
       properties:
-        code:
+        classCode:
           type: string
           example: '1'
         teacher:
@@ -354,7 +354,7 @@ components:
           example: 'برنامه نویسی پیشرفته'
         type:
           type: string
-          example: 'اصلی'
+          example: 'Asli'
         units:
           type: integer
           format: int64
