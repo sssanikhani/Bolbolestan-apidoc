@@ -340,6 +340,9 @@ components:
         time:
           type: string
           example: '10:30-12:00'
+        isFull:
+          type: boolean
+          example: true
         course:
           $ref: '#/components/schemas/Course'
 
