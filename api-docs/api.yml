@@ -107,22 +107,28 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 
-  '/student/offerings/{offering_id}':
+  '/student/offerings/{code}/{classCode}':
     post:
       tags:
         - student
       summary: Add offering for student
       operationId: addStudentOffering
       parameters:
-        - name: offering_id
+        - name: code
           in: path
-          description: The offering id to add
+          description: The offering course code to add
+          required: true
+          schema:
+            type: string
+        - name: classCode
+          in: path
+          description: The offering class code to add
           required: true
           schema:
             type: string
       responses:
         '200':
-          $ref: '#/components/responses/StudentOfferings'
+          $ref: '#/components/responses/OK'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -134,15 +140,21 @@ paths:
       summary: Remove chosen offering for student
       operationId: removeStudentOffering
       parameters:
-        - name: offering_id
+        - name: code
           in: path
-          description: The offering id to remove
+          description: The offering course code to add
+          required: true
+          schema:
+            type: string
+        - name: classCode
+          in: path
+          description: The offering class code to add
           required: true
           schema:
             type: string
       responses:
         '200':
-          $ref: '#/components/responses/StudentOfferings'
+          $ref: '#/components/responses/OK'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -156,7 +168,7 @@ paths:
       operationId: submitOfferings
       responses:
         '200':
-          $ref: '#/components/responses/StudentOfferings'
+          $ref: '#/components/responses/OK'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -170,7 +182,7 @@ paths:
       operationId: resetOfferings
       responses:
         '200':
-          $ref: '#/components/responses/StudentOfferings'
+          $ref: '#/components/responses/OK'
         '401':
           $ref: '#/components/responses/Unauthorized'
 
@@ -462,7 +474,7 @@ components:
                 type: string
                 example: "you must login first"
     StudentOfferings:
-      description: Student chosen offerings
+      description: OK
       content:
         application/json:
           schema:
