@@ -458,7 +458,7 @@ components:
                 example: 'Forbidden'
               message:
                 type: string
-                example: "you're not allowed to perform this job"
+                example: "you're not allowed to perform this action"
     Unauthorized:
       description: Unauthorized
       content:
