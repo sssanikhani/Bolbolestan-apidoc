@@ -31,6 +31,8 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
   
@@ -107,28 +109,18 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 
-  '/student/offerings/{code}/{classCode}':
     post:
       tags:
         - student
       summary: Add offering for student
       operationId: addStudentOffering
-      parameters:
-        - name: code
-          in: path
-          description: The offering course code to add
-          required: true
-          schema:
-            type: string
-        - name: classCode
-          in: path
-          description: The offering class code to add
-          required: true
-          schema:
-            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/Offering'
       responses:
         '200':
           $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -141,22 +133,13 @@ paths:
         - student
       summary: Remove chosen offering for student
       operationId: removeStudentOffering
-      parameters:
-        - name: code
-          in: path
-          description: The offering course code to add
-          required: true
-          schema:
-            type: string
-        - name: classCode
-          in: path
-          description: The offering class code to add
-          required: true
-          schema:
-            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/Offering'
       responses:
         '200':
           $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -393,6 +376,18 @@ components:
               password:
                 type: string
                 example: '1234'
+    Offering:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              code:
+                type: string
+                example: '8101000'
+              classCode:
+                type: string
+                example: '1'
     
   responses:
     OK:
