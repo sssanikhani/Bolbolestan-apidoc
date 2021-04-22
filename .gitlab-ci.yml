@@ -17,7 +17,7 @@ cache:
 pages:
   stage: deploy
   before_script:
-    - npm install swagger-ui-dist@3.22.1
+    - npm install swagger-ui-dist@3.47.1
   script:
     - mkdir public
     - cp -rp node_modules/swagger-ui-dist/* public
