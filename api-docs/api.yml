@@ -475,6 +475,12 @@ components:
       content:
         application/json:
           schema:
-            type: array
-            items:
-              $ref: '#/components/schemas/StudentOffering'
+            type: object
+            properties:
+              chosenUnits:
+                type: integer
+                example: 15
+              offerings:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StudentOffering'
