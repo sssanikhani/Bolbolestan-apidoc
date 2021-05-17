@@ -82,13 +82,6 @@ paths:
         - authorization
       summary: Change password
       operationId: userChangePassword
-      parameters:
-        - name: token
-          description: Token in generated link
-          in: query
-          required: true
-          schema:
-            type: string
       requestBody:
         $ref: '#/components/requestBodies/ChangePassword'
       responses:
