@@ -50,7 +50,11 @@ paths:
         $ref: '#/components/requestBodies/Login'
       responses:
         '200':
-          $ref: '#/components/responses/OK'
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -352,6 +356,9 @@ components:
         email:
           type: string
           example: 'test@ut.ac.ir'
+        password:
+          type: string
+          example: '1234'
         name:
           type: string
           example: 'تست'
