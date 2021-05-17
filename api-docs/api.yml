@@ -20,6 +20,26 @@ tags:
 
 paths:
   
+  /auth/signup:
+    post:
+      tags:
+        - authorization
+      summary: Signup student
+      operationId: studentSignup
+      requestBody:
+        $ref: '#/components/requestBodies/Signup'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: '#/components/responses/Conflict'
+
   /auth/login:
     post:
       tags:
@@ -35,16 +55,45 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
-  
-  /auth/logout:
+
+  /auth/forget-password:
     post:
       tags:
         - authorization
-      summary: Logout current student
-      operationId: studentLogout
+      summary: Forget password
+      operationId: userForgetPassword
+      requestBody:
+        $ref: '#/components/requestBodies/ForgetPassword'
       responses:
         '200':
           $ref: '#/components/responses/OK'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  
+  /auth/change-password:
+    post:
+      tags:
+        - authorization
+      summary: Change password
+      operationId: userChangePassword
+      parameters:
+        - name: token
+          description: Token in generated link
+          in: query
+          required: true
+          schema:
+            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/ChangePassword'
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '400':
+          $ref: '#/components/responses/BadRequest'
 
   /student:
     get:
@@ -293,6 +342,41 @@ components:
           type: string
           format: link
           example: 'http://localhost:8000/image'
+
+    NewStudent:
+      type: object
+      properties:
+        id:
+          type: string
+          example: '810197000'
+        email:
+          type: string
+          example: 'test@ut.ac.ir'
+        name:
+          type: string
+          example: 'تست'
+        secondName:
+          type: string
+          example: 'تست پور'
+        birthDate:
+          type: string
+          example: '1379/03/25'
+        faculty:
+          type: string
+          example: 'پردیس دانشکده های فنی'
+        field:
+          type: string
+          example: 'مهندسی کامپیوتر'
+        level:
+          type: string
+          example: 'کارشناسی'
+        status:
+          type: string
+          example: 'مشغول به تحصیل'
+        img:
+          type: string
+          format: link
+          example: 'http://localhost:8000/image'
     
     StudentOffering:
       type: object
@@ -363,6 +447,13 @@ components:
           items:
             $ref: '#/components/schemas/Offering'
 
+    AuthToken:
+      type: object
+      properties:
+        access:
+          type: string
+          example: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3Q6ODA4MCIsImlhdCI6MTYyMTI0NzYwMiwiZXhwIjoxNjIxMjQ4ODAwLCJhdWQiOiJ3d3cuZXhhbXBsZS5jb20iLCJzdWIiOiJqcm9ja2V0QGV4YW1wbGUuY29tIn0.62zLCroq7ihyW8hhNETE0M63KVtpaF3H3ZFDFVHy8Y8"
+
   requestBodies:
     Login:
       content:
@@ -370,9 +461,9 @@ components:
           schema:
             type: object
             properties:
-              id:
+              email:
                 type: string
-                example: '810197000'
+                example: 'test@ut.ac.ir'
               password:
                 type: string
                 example: '1234'
@@ -388,6 +479,29 @@ components:
               classCode:
                 type: string
                 example: '1'
+    Signup:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewStudent'
+    ForgetPassword:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                example: 'test@ut.ac.ir'
+    ChangePassword:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              password:
+                type: string
+                example: '1234'
     
   responses:
     OK:
@@ -470,6 +584,23 @@ components:
               message:
                 type: string
                 example: "you must login first"
+    Conflict:
+      description: AlreadyExists
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 409
+              short:
+                type: string
+                example: 'AlreadyExists'
+              message:
+                type: string
+                example: "the user with this email or id already exists"
+    
     StudentOfferings:
       description: OK
       content:
